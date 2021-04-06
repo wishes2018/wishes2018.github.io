@@ -8,6 +8,10 @@
 			font-family: digit;
 			src: url('digital-7_mono.ttf') format("truetype");
 		}
+		canvas{
+			display: block;
+			margin: 0 auto;
+		}
 	</style>
 	<link href="css/default.css" type="text/css" rel="stylesheet">
 	<script type="text/javascript" src="js/jquery.js"></script>
@@ -27,18 +31,18 @@
 				<canvas id="garden"></canvas>
 				<div id="words">
 					<div id="messages">
-						小七, I have fallen in love with you for
+						Xiaoqi, I have fallen in love with you for
 						<div id="elapseClock"></div>
 					</div>
 					<div id="loveu">
 						Love u forever and ever.<br/>
-						<div class="signature">- 大七</div>
+						<div class="signature">- Daqi</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<canvas id="glcanvas" width="640" height="480"></canvas>
+	<canvas id="glcanvas" width="960" height="540"></canvas>
 	<script type="text/javascript">
 		var offsetX = $("#loveHeart").width() / 2;
 		var offsetY = $("#loveHeart").height() / 2 - 55;
@@ -61,12 +65,12 @@
 		} else {
 			setTimeout(function () {
 				startHeartAnimation();
-			}, 500);
+			}, 300);
 
 			timeElapse(together);
 			setInterval(function () {
 				timeElapse(together);
-			}, 500);
+			}, 300);
 
 			adjustCodePosition();
 			$("#code").typewriter();

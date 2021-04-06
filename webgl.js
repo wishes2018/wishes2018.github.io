@@ -42,12 +42,11 @@ function main() {
     varying highp vec2 fragCoord;
     uniform sampler2D uSampler;
     uniform highp float iTime;
-    uniform highp vec2 iResolution;
     precision highp float;
 
     void main(void) {
 
-      vec2 p = 2.0*fragCoord - 1.0;//(2.0*fragCoord-iResolution.xy)/min(iResolution.y,iResolution.x);
+      vec2 p = 2.0*fragCoord - 1.0;
 
       // background color
       vec3 bcol = vec3(1.0,0.8,0.7-0.07*p.y)*(1.0-0.25*length(p));
@@ -97,7 +96,6 @@ function main() {
       normalMatrix: gl.getUniformLocation(shaderProgram, 'uNormalMatrix'),
       uSampler: gl.getUniformLocation(shaderProgram, 'uSampler'),
       time:gl.getUniformLocation(shaderProgram, 'iTime'),
-      iResolution:gl.getUniformLocation(shaderProgram, 'iResolution'),
     }
   };
 
@@ -419,8 +417,6 @@ function drawScene(gl, programInfo, buffers, texture, deltaTime,time) {
   gl.uniform1i(programInfo.uniformLocations.uSampler, 0);
 
   gl.uniform1f(programInfo.uniformLocations.time, time);
-
-  gl.uniform2f(programInfo.uniformLocations.iResolution,320,240)
 
   {
     const vertexCount = 6;
