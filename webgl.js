@@ -40,7 +40,6 @@ function main() {
 
   const fsSource = `
     varying highp vec2 fragCoord;
-    uniform sampler2D uSampler;
     uniform highp float iTime;
     precision highp float;
 
@@ -49,7 +48,7 @@ function main() {
       vec2 p = 2.0*fragCoord - 1.0;
 
       // background color
-      vec3 bcol = vec3(1.0,0.8,0.7-0.07*p.y)*(1.0-0.25*length(p));
+      vec3 bcol = vec3(0.94,0.74,0.66);
 
       // animate
       float tt = mod(iTime,1.5)/1.5;
@@ -70,8 +69,12 @@ function main() {
       s *= 0.5+0.5*pow( 1.0-clamp(r/d, 0.0, 1.0 ), 0.1 );
       vec3 hcol = vec3(1.0,0.5*r,0.3)*s;
 
-      vec3 col = mix( vec3(0.94,0.74,0.66), hcol, smoothstep( -0.01, 0.01, d-r) );
-      gl_FragColor = vec4(col,1.0);
+      vec3 col = mix( bcol, hcol, smoothstep( -0.01, 0.01, d-r) );
+      if(iTime > 6.0){
+        gl_FragColor = vec4(col,1.0);
+      }else{
+        gl_FragColor = vec4(bcol,1.0);
+      }
     }
   `;
 
@@ -94,7 +97,6 @@ function main() {
       projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
       normalMatrix: gl.getUniformLocation(shaderProgram, 'uNormalMatrix'),
-      uSampler: gl.getUniformLocation(shaderProgram, 'uSampler'),
       time:gl.getUniformLocation(shaderProgram, 'iTime'),
     }
   };
@@ -103,7 +105,7 @@ function main() {
   // objects we'll be drawing.
   const buffers = initBuffers(gl);
 
-  const texture = loadTexture(gl, 'cubetexture.png');
+  const texture = null;//loadTexture(gl, 'cubetexture.png');
 
   var then = 0;
 
@@ -407,14 +409,14 @@ function drawScene(gl, programInfo, buffers, texture, deltaTime,time) {
 
   // Specify the texture to map onto the faces.
 
-  // Tell WebGL we want to affect texture unit 0
-  gl.activeTexture(gl.TEXTURE0);
+  // // Tell WebGL we want to affect texture unit 0
+  // gl.activeTexture(gl.TEXTURE0);
 
-  // Bind the texture to texture unit 0
-  gl.bindTexture(gl.TEXTURE_2D, texture);
+  // // Bind the texture to texture unit 0
+  // gl.bindTexture(gl.TEXTURE_2D, texture);
 
-  // Tell the shader we bound the texture to texture unit 0
-  gl.uniform1i(programInfo.uniformLocations.uSampler, 0);
+  // // Tell the shader we bound the texture to texture unit 0
+  // gl.uniform1i(programInfo.uniformLocations.uSampler, 0);
 
   gl.uniform1f(programInfo.uniformLocations.time, time);
 
