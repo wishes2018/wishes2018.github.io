@@ -69,8 +69,10 @@ function main() {
       s *= 0.5+0.5*pow( 1.0-clamp(r/d, 0.0, 1.0 ), 0.1 );
       vec3 hcol = vec3(1.0,0.5*r,0.3)*s;
 
-      vec3 col = mix( bcol, hcol, smoothstep( -0.01, 0.01, d-r) );
-      if(iTime > 6.0){
+      float delay = 9.0;
+      if(iTime > delay){
+        float blend = clamp(iTime-delay,0.0,1.0);
+        vec3 col = mix( bcol, hcol*blend+bcol*(1.0-blend), smoothstep( -0.01, 0.01, d-r) );
         gl_FragColor = vec4(col,1.0);
       }else{
         gl_FragColor = vec4(bcol,1.0);
